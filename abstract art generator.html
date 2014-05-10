@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Abstract Art Generator</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  <style>
+  canvas {
+ height:750px;
+ width:650px;
+ position:absolute;
+ left:50;
+ top:75;
+ border:15px solid #754015;
+}
+p {
+position:absolute;   
+}
+  </style>
+</head>
+<body>
+<p>Click on the canvas to create some modern art.  Click once for a single stroke, double click for a full masterpiece.</p>
+<canvas id="paper">
+</canvas>
+<script>
+$(document).ready(function() {
+  var easel=document.getElementById("paper");
+  var art=easel.getContext("2d");
+   var choosePaint=function() {
+   var chance=Math.round(Math.random()*9);
+   switch (chance) {
+    case 1:
+        art.strokeStyle="red";
+        break;
+    case 2:
+        art.strokeStyle="orange";
+        break;
+    case 3:
+        art.strokeStyle="yellow";
+        break;
+    case 4:
+        art.strokeStyle="green";
+        break;
+    case 5:
+        art.strokeStyle="blue";
+        break;
+    case 6:
+        art.strokeStyle="black";
+        break;
+    case 7:
+        art.strokeStyle="gray";
+        break;
+    case 8:
+        art.strokeStyle="brown";
+        break;
+    case 9:
+        art.strokeStyle="violet";
+        break;
+    default:
+        art.strokeStyle="white";
+        break;
+   }
+  };
+  var chooseBrush=function() {
+      var bristles=Math.floor(Math.random()*3);
+      switch (bristles) {
+          case 1:
+              art.lineWidth=1;
+              break;
+           case 2:
+               art.lineWidth=5;
+               break;
+            case 3:
+                art.lineWidth=10;
+                break;
+            default:
+                art.lineWidth=1;
+                break;
+      }
+  } ;
+  var drawLine=function() {
+  var xPosStart=Math.random()*150;
+  var yPosStart=Math.random()*150;
+  var xPosEnd=Math.random()*150;
+  var yPosEnd=Math.random()*150;
+  art.beginPath();
+  art.moveTo(xPosStart, yPosStart);
+  art.lineTo(xPosEnd, yPosEnd);
+  chooseBrush();
+  choosePaint();
+  art.stroke();
+  }
+  var drawArc=function() {
+  var xAxis=Math.random()*150;
+  var yAxis=Math.random()*150;
+  var radius=Math.random()*150;
+  var angle=Math.random()*Math.PI;
+  art.beginPath();
+  art.arc(xAxis, yAxis, radius, 0, angle);
+  chooseBrush();
+  choosePaint();
+  art.stroke();
+  }
+  var brushStroke=function() {
+    var muse = Math.round(Math.random());
+    if (muse===0) {
+     drawLine();   
+    }
+    else if (muse ===1) {
+     drawArc();   
+    }
+  }
+  var masterpiece=function() {
+   for (i=0; i<Math.random()*100; i++) {
+     brushStroke();  
+   };
+  }
+  $("#paper").click(function() {
+     brushStroke(); 
+     $("p").fadeOut("fast")
+  });
+  $("#paper").dblclick(function() {
+     masterpiece();
+     $("p").fadeOut("fast");
+  });
+  });
+</script>
+</body>
+</html>
