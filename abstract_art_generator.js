@@ -74,9 +74,10 @@ $(document).ready(function() {
 		var xAxis=chance(1, 150);
 		var yAxis=chance(1, 150);
 		var radius=chance(1, 150);
-		var angle=Math.random()*Math.PI;
+		var angle=Math.random()*Math.PI*2;
+		var startingPoint=Math.random()*Math.PI;
 		art.beginPath();
-		art.arc(xAxis, yAxis, radius, 0, angle);
+		art.arc(xAxis, yAxis, radius, startingPoint, angle);
 		chooseBrush();
 		choosePaint();
 		art.stroke();
@@ -90,7 +91,7 @@ $(document).ready(function() {
 		}
 	};
 	var masterpiece=function() {
-                art.rect(0, 0, 500, 500);
+		art.rect(0, 0, 500, 500);
 		art.fillStyle="white";
 		art.fill();
 		for (i=0; i<chance(1, 100); i++) {
@@ -100,9 +101,14 @@ $(document).ready(function() {
 	//so it always loads with a new image.
 	masterpiece();
 
-        var imagination = document.getElementById("paper");
-        var parnassus = imagination.toDataURL("");
+	var imagination = document.getElementById("paper");
+	var parnassus = imagination.toDataURL("");
 	var firstRandomWord = lexicon[chance(0, lexicon.length)];
 	var secondRandomWord = lexicon[chance(0, lexicon.length)];
 	$("a").attr("download", firstRandomWord.charAt(0).toUpperCase() + firstRandomWord.slice(1) + "-" + secondRandomWord.charAt(0).toUpperCase() + secondRandomWord.slice(1) + ".png").attr("href", parnassus);
+	var canvasHeight = $("canvas").height();
+	$("#msg").css("bottom", canvasHeight/2 + "px");
+	setTimeout(function() {
+		$("#msg").hide();
+	}, 5000);
 });
